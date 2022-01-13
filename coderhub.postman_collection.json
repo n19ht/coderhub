@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "f703d826-ad19-45c0-ad40-1cf687a07cf6",
+		"name": "coderhub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "用户请求接口",
+			"item": [
+				{
+					"name": "用户注册接口",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yc\",\r\n    \"password\":\"yc19990501\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/users"
+					},
+					"response": []
+				},
+				{
+					"name": "用户登录接口",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res=pm.response.json()\r",
+									"pm.globals.set(\"token\",res.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": ""
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"袁佳梦\",\r\n    \"password\":\"love\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/login"
+					},
+					"response": []
+				},
+				{
+					"name": "用户登录验证",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8888/test"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "用户动态接口",
+			"item": [
+				{
+					"name": "发表动态接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"hello typescript\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/moment"
+					},
+					"response": []
+				},
+				{
+					"name": "获取某一条动态的详情",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "获取动态列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/moment/?offset=0&size=20",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"moment",
+								""
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改动态",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"测试一下222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/moment/2"
+					},
+					"response": []
+				},
+				{
+					"name": "删除评论接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8888/moment/7"
+					},
+					"response": []
+				},
+				{
+					"name": "为动态添加标签接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labels\":[\"ts\",\"进阶\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/moment/5/labels"
+					},
+					"response": []
+				},
+				{
+					"name": "获取用户头像接口",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8888/users/4/avatar"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "用户评论接口",
+			"item": [
+				{
+					"name": "发表评论接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"momentId\":\"1\",\r\n    \"content\":\"long time no see\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/comment"
+					},
+					"response": []
+				},
+				{
+					"name": "回复评论接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"momentId\":\"1\",\r\n    \"content\":\"好久不见，把话都藏到好酒里面\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/comment/1/reply"
+					},
+					"response": []
+				},
+				{
+					"name": "修改评论接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"再试一下\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/comment/3"
+					},
+					"response": []
+				},
+				{
+					"name": "删除评论接口",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "获取评论接口",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "标签数据接口",
+			"item": [
+				{
+					"name": "添加标签接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"测试\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8888/label"
+					},
+					"response": []
+				},
+				{
+					"name": "获取标签接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/label?offset=0&limit=20",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"label"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "上传图像接口",
+			"item": [
+				{
+					"name": "上传头像接口",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/YC/Desktop/react.png"
+								}
+							]
+						},
+						"url": "localhost:8888/upload/avatar"
+					},
+					"response": []
+				},
+				{
+					"name": "上传动态配图",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/C:/Users/YC/Desktop/11.jpg"
+								},
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/C:/Users/YC/Desktop/react.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8888/upload/picture?momentId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"upload",
+								"picture"
+							],
+							"query": [
+								{
+									"key": "momentId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

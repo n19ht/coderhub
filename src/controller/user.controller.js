@@ -13,7 +13,7 @@ class UserController {
     async avatarInfo(ctx, next) {
         const { userId } = ctx.params
         const res = await getAvatarByUserId(userId)
-        console.log(res);
+        ctx.response.set('content-type', res.mimetype)
         ctx.body = fs.createReadStream(`${AVATAR_PATH}/${res.filename}`)
 
     }

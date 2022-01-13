@@ -5,6 +5,12 @@ const avatarUpload = Multer({
 })
 const avatarHandler = avatarUpload.single('avatar')
 
+const pictureUpload = Multer({
+    dest: './uploads/pictrues'
+})
+const pictureHandler = pictureUpload.array('picture', 9)
+
 module.exports = {
-    avatarHandler
+    avatarHandler,
+    pictureHandler
 }
